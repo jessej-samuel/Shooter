@@ -11,4 +11,5 @@ function love.conf(t)
     t.externalStorage = true
     t.window.fullscreen = true
     t.console = true
+    t.vsync = false
 end
