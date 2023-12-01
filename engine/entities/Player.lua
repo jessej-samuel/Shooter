@@ -1,47 +1,56 @@
 _G.love = require('love')
+local vec2 = require("modules/vector")
 
 function Player()
     return {
-        x = 0 + 10,
-        y = 0 + 10,
         w = 10,
         h = 10,
-        dir = {
-            x = 0,
-            y = 0
-        },
-        speed = 0,
-        max_speed = 3,
-        acceleration = 0.1,
+        pos = vec2(10, 10),
+        dir = vec2(0, 0),
+        speed = vec2(0, 0),
+        max_speed = 5,
+        acceleration = vec2(0.15, 0.15),
         draw = function(self)
-            love.graphics.circle('fill', self.x, self.y, self.w)
+            love.graphics.circle('fill', self.pos.x, self.pos.y, self.w)
         end,
-        update = function(self)
+        move = function(self)
+            moving = false
             -- event handling
             if love.keyboard.isDown("a") then
+                moving = true
                 self.dir.x = -1
             elseif love.keyboard.isDown("d") then
+                moving = true
                 self.dir.x = 1
             else
                 self.dir.x = 0
             end
-            
+
             if love.keyboard.isDown("w") then
+                moving = true
                 self.dir.y = -1
             elseif love.keyboard.isDown("s") then
+                moving = true
                 self.dir.y = 1
             else
                 self.dir.y = 0
             end
 
-            self.speed = self.speed + self.acceleration -- acclerate
-            if self.speed > self.max_speed then -- speed limit
-                self.speed = self.max_speed
+            if moving then
+                self.speed = self.speed + self.acceleration * self.dir
+                if self.speed:getmag() > self.max_speed then
+                    self.speed:setmag(self.max_speed)
+                end
+            else
+                self.speed = vec2(0, 0)
             end
-            self.x = self.x + self.dir.x * (self.speed / 0.7142857143)
-            self.y = self.y + self.dir.y * (self.speed / 0.7142857143)
+
+            self.pos = self.pos + self.speed
 
             -- Set limits on the player
+        end,
+        update = function(self)
+            self:move()
         end
     }
 end

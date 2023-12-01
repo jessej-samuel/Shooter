@@ -13,5 +13,5 @@ end
 
 function love.draw()
     player:draw()
-    debugger:draw({love.timer.getFPS(), player.speed})
+    debugger:draw({'fps', love.timer.getFPS(), 'pos ', player.pos, 'spd ', player.speed, 'acc', player.acceleration})
 end

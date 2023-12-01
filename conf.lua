@@ -10,4 +10,5 @@ function love.conf(t)
     t.identity = 'data/saves'
     t.externalStorage = true
     t.window.fullscreen = true
+    t.console = true
 end
