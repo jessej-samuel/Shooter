@@ -6,7 +6,7 @@ function Debug()
         draw = function(self, data)
             love.graphics.setColor(1, 0, 0)
             for i, v in ipairs(data) do
-                love.graphics.print(tostring(data[i]), SCREEN_DIMENSIONS.w - 35, 0 + i * 20)
+                love.graphics.print(tostring(data[i]), 2, 2 + (i - 1) * 20)
             end
             love.graphics.setColor(1, 1, 1)
         end
